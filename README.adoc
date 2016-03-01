@@ -1,0 +1,27 @@
+= Example project: Reagent client side routing with Bidi and Accountant
+
+A simple example trying to demonstrate a way to do client side routing with
+Bidi and Accountant in Reagent projects.
+
+## Setup
+
+I have also tried to configure the project to support an  interactive development
+workflow. To start the example run:
+
+    lein repl
+
+Wait for the `routing-example.user` prompt and then issue:
+
+    (start)
+
+Open your browser at http://localhost:3449/[localhost:3449]. You will
+have Figwheel's magic enabled.
+
+If you are using Emacs you can start the repl using CIDER jack-in (issuing
+that same `(start)` command at the `routing-example.user` prompt) and enjoy
+the magic of a CIDER enabled development workflow. (This is extra handy for
+when you are learning how to set up Bidi routing tables.)
+
+## License
+
+Use however you want, at your own risk.
