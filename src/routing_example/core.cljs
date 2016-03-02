@@ -27,7 +27,8 @@
    [:h1 "Routing example: Index"]
    [:ul
     [:li [:a {:href (bidi/path-for app-routes :section-a) } "Section A"]]
-    [:li [:a {:href (bidi/path-for app-routes :section-b) } "Section B"]]]])
+    [:li [:a {:href (bidi/path-for app-routes :section-b) } "Section B"]]
+    [:li [:a {:href "/borken/link" } "Borken link"]]]])
 
 (defn section-a []
   [:span
