@@ -49,9 +49,9 @@
 
 (defn four-o-four []
   [:span
-   [:h1 "404"
-    [:p "What you are looking for, "]
-    [:p "I do not have."]]])
+   [:h1 "404"]
+   [:p "What you are looking for, "]
+   [:p "I do not have."]])
 
 ;; == /Route components
 
