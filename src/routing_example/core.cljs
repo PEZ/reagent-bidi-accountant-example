@@ -26,50 +26,55 @@
 (defmulti page-contents identity)
 
 (defmethod page-contents :index []
-  [:span
-   [:h1 "Routing example: Index"]
-   [:ul
-    [:li [:a {:href (bidi/path-for app-routes :section-a) } "Section A"]]
-    [:li [:a {:href (bidi/path-for app-routes :section-b) } "Section B"]]
-    [:li [:a {:href (bidi/path-for app-routes :missing-route) } "Missing-route"]]
-    [:li [:a {:href "/borken/link" } "Borken link"]]]])
+  (fn []
+    [:span
+     [:h1 "Routing example: Index"]
+     [:ul
+      [:li [:a {:href (bidi/path-for app-routes :section-a) } "Section A"]]
+      [:li [:a {:href (bidi/path-for app-routes :section-b) } "Section B"]]
+      [:li [:a {:href (bidi/path-for app-routes :missing-route) } "Missing-route"]]
+      [:li [:a {:href "/borken/link" } "Borken link"]]]]))
 
 (defmethod page-contents :section-a []
-  [:span
-   [:h1 "Routing example: Section A"]
-   [:ul (map (fn [item-id]
-               [:li {:key (str "item-" item-id)}
-                [:a {:href (bidi/path-for app-routes :a-item :item-id item-id)} "Item: " item-id]])
-             (range 1 6))]])
+  (fn []
+    [:span
+     [:h1 "Routing example: Section A"]
+     [:ul (map (fn [item-id]
+                 [:li {:key (str "item-" item-id)}
+                  [:a {:href (bidi/path-for app-routes :a-item :item-id item-id)} "Item: " item-id]])
+               (range 1 6))]]))
 
 (defmethod page-contents :a-item []
-  (let [routing-data (session/get :route)
-        item (get-in routing-data [:route-params :item-id])]
-    [:span
-     [:h1 (str "Routing example: Section A, item " item)]
-     [:p [:a {:href (bidi/path-for app-routes :section-a)} "Back to Section A"]]]))
+  (fn []
+    (let [routing-data (session/get :route)
+          item (get-in routing-data [:route-params :item-id])]
+      [:span
+       [:h1 (str "Routing example: Section A, item " item)]
+       [:p [:a {:href (bidi/path-for app-routes :section-a)} "Back to Section A"]]])))
 
 (defmethod page-contents :section-b []
-  [:span
-   [:h1 "Routing example: Section B"]])
+  (fn [] [:span
+          [:h1 "Routing example: Section B"]]))
 
 (defmethod page-contents :four-o-four []
   "Non-existing routes go here"
-  [:span
-   [:h1 "404: It is not here"]
-   [:pre.verse
-    "What you are looking for,
+  (fn []
+    [:span
+     [:h1 "404: It is not here"]
+     [:pre.verse
+      "What you are looking for,
 I do not have.
 How could I have,
-what does not exist?"]])
+what does not exist?"]]))
 
 (defmethod page-contents :default []
   "Configured routes, missing an implementation, go here"
-  [:span
-   [:h1 "404: My bad"]
-   [:pre.verse
-    "This page should be here,
-but I never created it."]])
+  (fn []
+    [:span
+     [:h1 "404: My bad"]
+     [:pre.verse
+      "This page should be here,
+but I never created it."]]))
 
 (defn page []
   (fn []
@@ -77,7 +82,7 @@ but I never created it."]])
       [:div
        [:p [:a {:href (bidi/path-for app-routes :index) } "Go home"]]
        [:hr]
-       (page-contents page)
+       ^{:key page} [page-contents page]
        [:hr]
        [:p "(Using "
         [:a {:href "https://reagent-project.github.io/"} "Reagent"] ", "
