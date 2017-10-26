@@ -3,18 +3,18 @@
   :url "https://github.com/PEZ/routing-example"
 
   :min-lein-version "2.5.3"
-  
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.170"]
-                 [org.clojure/core.async "0.2.374"
+
+  :dependencies [[org.clojure/clojure "1.9.0-beta3"]
+                 [org.clojure/clojurescript "1.9.946"]
+                 [org.clojure/core.async "0.3.443"
                   :exclusions [org.clojure/tools.reader]]
-                 [reagent "0.5.1"]
-                 [reagent-utils "0.1.7"]
-                 [bidi "2.0.0"]
-                 [venantius/accountant "0.1.7"]]
-  
-  :plugins [[lein-figwheel "0.5.0-6"]
-            [lein-cljsbuild "1.1.2" :exclusions [[org.clojure/clojure]]]]
+                 [reagent "0.8.0-alpha2"]
+                 [reagent-utils "0.2.1"]
+                 [bidi "2.1.2"]
+                 [venantius/accountant "0.2.0"]]
+
+  :plugins [[lein-figwheel "0.5.14"]
+            [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
 
@@ -22,23 +22,25 @@
 
   :profiles {:dev
              {:source-paths ["dev"]
-              :dependencies [[figwheel-sidecar "0.5.0-6" :exclusions [org.clojure/clojure]]
-                             [com.cemerick/piggieback "0.2.1" :exclusions [org.clojure/clojure]]
-                             [prismatic/schema "1.0.5"]]}}
+              :dependencies [[figwheel-sidecar "0.5.14" :exclusions [org.clojure/clojure]]
+                             [com.cemerick/piggieback "0.2.2" :exclusions [org.clojure/clojure]]
+                             [prismatic/schema "1.1.7"]]}}
 
 
   :cljsbuild {:builds
               {:dev
                {:source-paths ["src"]
 
-                :figwheel {:on-jsload "routing-example.core/on-js-reload"}
+                :figwheel {:on-jsload "routing-example.core/on-js-reload"
+                           :websocket-host :js-client-host}
+
 
                 :compiler {:main routing-example.core
                            :asset-path "/js/compiled/out"
                            :output-to "resources/public/js/compiled/routing_example.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true}}
-               
+
                ;; This next build is an compressed minified build for
                ;; production. You can build this with:
                ;; lein cljsbuild once min
@@ -52,10 +54,9 @@
   :figwheel {:http-server-root "public"
              :server-port 3449
              :server-ip "0.0.0.0"
-             :websocket-host :js-client-host
              :css-dirs ["resources/public/css"]
              :ring-handler routing-example.server/handler}
-  
+
   :repl-options {:init-ns routing-example.user
                  :skip-default-init false
                  :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
