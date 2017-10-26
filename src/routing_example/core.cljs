@@ -11,14 +11,12 @@
 (enable-console-print!)
 
 (def app-routes
-  ["/"
-   [["" :index]
-    ["section-a"
-     [["" :section-a]
-      [["/item-" :item-id] :a-item]]]
-    ["section-b" :section-b]
-    ["missing-route" :missing-route]
-    [true :four-o-four]]])
+  ["/" {"" :index
+        "section-a" {"" :section-a
+                     [:item-id "/item-"] :a-item}
+        "section-b" :section-b
+        "missing-route" :missing-route
+        true :four-o-four}])
 
 ;;(s/check bidi.schema/RoutePair app-routes)
 ;;(s/validate bidi.schema/RoutePair app-routes)
@@ -40,7 +38,7 @@
     [:span
      [:h1 "Routing example: Section A"]
      [:ul (map (fn [item-id]
-                 [:li {:key (str "item-" item-id)}
+                 [:li {:name (str "item-" item-id) :key (str "item-" item-id)}
                   [:a {:href (bidi/path-for app-routes :a-item :item-id item-id)} "Item: " item-id]])
                (range 1 6))]]))
 
@@ -89,7 +87,6 @@ but I never created it."]]))
         [:a {:href "https://github.com/juxt/bidi"} "Bidi"] " & "
         [:a {:href "https://github.com/venantius/accountant"} "Accountant"]
         ")"]])))
-
 
 (defn on-js-reload []
   (reagent/render-component [page]
