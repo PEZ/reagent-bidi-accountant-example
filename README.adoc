@@ -7,7 +7,7 @@ I talk considerably more about this example in  https://pez.github.io/2016/03/01
 
 ## Setup
 
-I have also tried to configure the project to support an  interactive development
+I have also configured the project to support an  interactive development
 workflow. To start the example run:
 
     $ lein repl
