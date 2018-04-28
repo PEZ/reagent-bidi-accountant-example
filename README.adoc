@@ -23,6 +23,8 @@ If you are using Emacs you can start the repl using `cider-jack-in` and enjoy
 a CIDER enabled development workflow. (This is extra handy for when you are learning
 how to set up Bidi routing tables.)
 
+If you use VS Code I recommend installing https://marketplace.visualstudio.com/items?itemName=cospaia.clojure4vscode[Calva], which will bring you some of the Emacs Cider experience. (Yes, I am biased, I am the publisher of Calva.)
+
 ## License
 
 Use however you want, at your own risk.
