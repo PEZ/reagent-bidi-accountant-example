@@ -13,7 +13,7 @@
                  [bidi "2.1.2"]
                  [venantius/accountant "0.2.0"]]
 
-  :plugins [[lein-figwheel "0.5.14"]
+  :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
 
   :source-paths ["src"]
@@ -22,9 +22,11 @@
 
   :profiles {:dev
              {:source-paths ["dev"]
-              :dependencies [[figwheel-sidecar "0.5.14" :exclusions [org.clojure/clojure]]
-                             [com.cemerick/piggieback "0.2.2" :exclusions [org.clojure/clojure]]
-                             [prismatic/schema "1.1.7"]]}}
+              :dependencies [[prismatic/schema "1.1.7"]]}
+             :repl {:plugins [[cider/cider-nrepl "0.16.0"]]
+                    :dependencies [[org.clojure/tools.nrepl "0.2.13"]
+                                   [com.cemerick/piggieback "0.2.2"]
+                                   [figwheel-sidecar "0.5.16"]]}}
 
 
   :cljsbuild {:builds
@@ -52,7 +54,7 @@
                            :pretty-print false}}}}
 
   :figwheel {:http-server-root "public"
-             :server-port 3449
+             :server-port 4449
              :server-ip "0.0.0.0"
              :css-dirs ["resources/public/css"]
              :ring-handler routing-example.server/handler}
