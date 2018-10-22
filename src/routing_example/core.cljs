@@ -131,7 +131,13 @@ but it is not."]]))
        [:header
         [:p#top [:a {:href (bidi/path-for app-routes :index)} "Go home"] " | "
          [:a {:href (bidi/path-for app-routes :about)} "See about"] " | "
-         [:a {:href "#bottom"} "Bottom of page"]]]
+         [:a {:href "#bottom"} "Bottom of page"] " | "
+         [:input {:id :use-clerk?
+                  :type "checkbox"
+                  :checked (session/get :use-clerk?)
+                  :on-change (fn [e]
+                               (session/put! :use-clerk? (not (session/get :use-clerk?))))}]
+         [:label {:for :use-clerk?} "Use Clerk?"]]]
        ^{:key page} [page-contents page]
        [:footer
         [:p#bottom [:a {:href (bidi/path-for app-routes :index)} "Go home"] " | "
@@ -143,17 +149,20 @@ but it is not."]]))
                             (. js/document (getElementById "app"))))
 
 (defn ^:export init! []
+  (session/put! :use-clerk? true)
   (clerk/initialize!)
   (accountant/configure-navigation!
    {:nav-handler (fn
                    [path]
-                   (reagent/after-render clerk/after-render!)
+                   (when (session/get :use-clerk?)
+                     (reagent/after-render clerk/after-render!))
                    (let [match (bidi/match-route app-routes path)
                          current-page (:handler match)
                          route-params (:route-params match)]
                      (session/put! :route {:current-page current-page
                                            :route-params route-params}))
-                   (clerk/navigate-page! path))
+                   (when (session/get :use-clerk?)
+                     (clerk/navigate-page! path)))
     :path-exists? (fn [path]
                     (boolean (bidi/match-route app-routes path)))})
   (accountant/dispatch-current!)
