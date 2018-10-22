@@ -16,7 +16,7 @@ wait for the `routing-example.user` name space to load and then issue:
 
     routing-example.user> (start)
 
-Open your browser at http://localhost:3449/[localhost:4449]. You will
+Open your browser at http://localhost:4449/[localhost:4449]. You will
 have Figwheel's magic enabled.
 
 If you are using Emacs you can start the repl using `cider-jack-in` and enjoy
