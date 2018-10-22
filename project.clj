@@ -1,17 +1,18 @@
 (defproject routing-example "0.1.0-SNAPSHOT"
-  :description "Client side routing with bidi and accountant"
+  :description "Client side routing with bidi, accountant and clerk"
   :url "https://github.com/PEZ/routing-example"
 
   :min-lein-version "2.5.3"
 
-  :dependencies [[org.clojure/clojure "1.9.0-beta3"]
-                 [org.clojure/clojurescript "1.9.946"]
-                 [org.clojure/core.async "0.3.443"
-                  :exclusions [org.clojure/tools.reader]]
-                 [reagent "0.8.0-alpha2"]
-                 [reagent-utils "0.2.1"]
-                 [bidi "2.1.2"]
-                 [venantius/accountant "0.2.0"]]
+  :dependencies [[org.clojure/clojure "1.9.0"]
+                 [org.clojure/clojurescript "1.10.339"]
+                 #_[org.clojure/core.async "0.3.443"
+                    :exclusions [org.clojure/tools.reader]]
+                 [reagent "0.8.1"]
+                 [reagent-utils "0.3.1"]
+                 [bidi "2.1.4"]
+                 [venantius/accountant "0.2.4"]
+                 [pez/clerk "1.0.0-SNAPSHOT"]]
 
   :plugins [[lein-figwheel "0.5.16"]
             [lein-cljsbuild "1.1.7" :exclusions [[org.clojure/clojure]]]]
@@ -23,9 +24,9 @@
   :profiles {:dev
              {:source-paths ["dev"]
               :dependencies [[prismatic/schema "1.1.7"]]}
-             :repl {:plugins [[cider/cider-nrepl "0.16.0"]]
-                    :dependencies [[org.clojure/tools.nrepl "0.2.13"]
-                                   [com.cemerick/piggieback "0.2.2"]
+             :repl {:plugins [[cider/cider-nrepl "0.18.0"]]
+                    :dependencies [[nrepl "0.4.5"]
+                                   [cider/piggieback "0.3.9"]
                                    [figwheel-sidecar "0.5.16"]]}}
 
 
@@ -61,4 +62,4 @@
 
   :repl-options {:init-ns routing-example.user
                  :skip-default-init false
-                 :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]})
+                 :nrepl-middleware [cider.piggieback/wrap-cljs-repl]})
