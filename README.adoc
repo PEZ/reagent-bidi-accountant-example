@@ -1,4 +1,4 @@
-= Example project: Reagent client side routing with Bidi and Accountant
+= Example project: Reagent client side routing with Bidi, Accountant and Clerk
 
 A simple example trying to demonstrate a way to do client side routing with
 https://github.com/juxt/bidi[Bidi], https://github.com/venantius/accountant[Accountant] and https://github.com/PEZ/clerk[Clerk] in https://reagent-project.github.io/[Reagent] projects.
