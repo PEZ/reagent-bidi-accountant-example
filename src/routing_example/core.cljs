@@ -131,38 +131,32 @@ but it is not."]]))
        [:header
         [:p#top [:a {:href (bidi/path-for app-routes :index)} "Go home"] " | "
          [:a {:href (bidi/path-for app-routes :about)} "See about"] " | "
-         [:a {:href "#bottom"} "Bottom of page"] " | "
-         [:input {:id :use-clerk?
-                  :type "checkbox"
-                  :checked (session/get :use-clerk?)
-                  :on-change (fn [e]
-                               (session/put! :use-clerk? (not (session/get :use-clerk?))))}]
-         [:label {:for :use-clerk?} "Use Clerk?"]]]
-       ^{:key page} [page-contents page]
-       [:footer
-        [:p#bottom [:a {:href (bidi/path-for app-routes :index)} "Go home"] " | "
-         [:a {:href (bidi/path-for app-routes :about)} "See about"] " | "
-         [:a {:href "#top"} "Top of page"]]]])))
+         [:a {:href "#bottom"} "Bottom of page"]]
+        ^{:key page} [page-contents page]
+        [:footer
+         [:div
+          [:p "See also: " [:a {:href "https://clerk-demo.netlify.com"} "clerk-demo.netlify.com"]]]
+         [:div
+          [:p#bottom [:a {:href (bidi/path-for app-routes :index)} "Go home"] " | "
+           [:a {:href (bidi/path-for app-routes :about)} "See about"] " | "
+           [:a {:href "#top"} "Top of page"]]]]]])))
 
 (defn on-js-reload []
   (reagent/render-component [current-page]
                             (. js/document (getElementById "app"))))
 
 (defn ^:export init! []
-  (session/put! :use-clerk? true)
   (clerk/initialize!)
   (accountant/configure-navigation!
    {:nav-handler (fn
                    [path]
-                   (when (session/get :use-clerk?)
-                     (reagent/after-render clerk/after-render!))
+                   (reagent/after-render clerk/after-render!)
                    (let [match (bidi/match-route app-routes path)
                          current-page (:handler match)
                          route-params (:route-params match)]
                      (session/put! :route {:current-page current-page
                                            :route-params route-params}))
-                   (when (session/get :use-clerk?)
-                     (clerk/navigate-page! path)))
+                   (clerk/navigate-page! path))
     :path-exists? (fn [path]
                     (boolean (bidi/match-route app-routes path)))})
   (accountant/dispatch-current!)

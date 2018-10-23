@@ -3,6 +3,8 @@
 A simple example trying to demonstrate a way to do client side routing with
 https://github.com/juxt/bidi[Bidi], https://github.com/venantius/accountant[Accountant] and https://github.com/PEZ/clerk[Clerk] in https://reagent-project.github.io/[Reagent] projects.
 
+There is a live demo of a very similar project here: https://clerk-demo.netlify.com[clerk-demo.netlify.com].
+
 I talk considerably more about this example in  https://pez.github.io/2016/03/01/Reagent-clientside-routing-with-Bidi-and-Accountant.html[this blog post]. (Except the Clerk part, which is a later addition.)
 
 ## Setup
